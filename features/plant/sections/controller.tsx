@@ -37,7 +37,7 @@ export const Controller = ({ styles, zoneNumber, plantSpot }: Props) => {
           statusTextClass: "text-green-700",
         }}
       />
-      <ControllerCard
+      {/* <ControllerCard
         title="Light"
         icon="Lightbulb"
         value={controls?.light}
@@ -52,7 +52,7 @@ export const Controller = ({ styles, zoneNumber, plantSpot }: Props) => {
           statusBgClass: "bg-yellow-50",
           statusTextClass: "text-yellow-700",
         }}
-      />
+      /> */}
       <ControllerCard
         title="Sprinkler"
         icon="Droplet"
