@@ -1,9 +1,10 @@
 import { router } from "expo-router";
 import { icons } from "lucide-react-native";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { HeaderIcon } from "./header-icon";
 
 export function Header({
+  image,
   title,
   description,
   children,
@@ -11,6 +12,7 @@ export function Header({
   rightIcon,
   onRightIconPress,
 }: {
+  image?: Image;
   title: string;
   description: string;
   showBackButton?: boolean;
@@ -24,7 +26,12 @@ export function Header({
         {showBackButton && (
           <HeaderIcon icon="ArrowLeft" onPress={() => router.back()} />
         )}
-        <View className="flex-1 items-center justify-between flex-row">
+        <View className="items-center justify-between flex-row">
+          <Image
+            source={require("@/assets/images/logo.png")}
+            className="w-16 h-16 rounded-xl"
+            resizeMode="contain"
+          />
           <View>
             <Text className="text-2xl font-bold text-white">{title}</Text>
             <Text className="text-white">{description}</Text>

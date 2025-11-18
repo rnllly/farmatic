@@ -11,7 +11,6 @@ import { ToastAndroid } from "react-native";
 import { CareInstruction } from "../sections/care-instruction";
 import { PlantDescription } from "../sections/plant-description";
 import { PlantImage } from "../sections/plant-image";
-import { PlantProfile } from "../sections/plant-profile";
 
 export const PlantLibraryDetailsScreen = ({ id }: { id: string }) => {
   const { adminId } = useAuth();
@@ -51,7 +50,6 @@ export const PlantLibraryDetailsScreen = ({ id }: { id: string }) => {
       <ScreenContainer scrollable>
         <PlantImage imageUrl={data?.default_image?.original_url} />
         <PlantDescription description={data?.description} />
-        <PlantProfile data={data} />
         <CareInstruction data={data} />
       </ScreenContainer>
     </MainLayout>
