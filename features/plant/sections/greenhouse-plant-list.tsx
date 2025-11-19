@@ -36,7 +36,6 @@ export const GreenhousePlantList = ({ data, loading }: Props) => {
         <PlantCard
           image={item.imageUrl}
           name={item.name}
-          zoneNumber={item.zoneNumber}
           onPress={() =>
             router.push({
               pathname: "/plant/greenhouse/[id]",

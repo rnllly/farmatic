@@ -6,17 +6,10 @@ import { Text, View } from "react-native";
 
 interface Props {
   styles?: string;
-  zoneNumber: number;
-  plantSpot: number;
 }
 
-export const Controller = ({ styles, zoneNumber, plantSpot }: Props) => {
-  const { data: controls } = useRealtimeDatabase(
-    `controllers/zones/${zoneNumber}`
-  );
-  const { data: sprinkler } = useRealtimeDatabase(
-    `controllers/zones/${zoneNumber}/sprinklers/${plantSpot}`
-  );
+export const Controller = ({ styles }: Props) => {
+  const { data: controls } = useRealtimeDatabase(`controllers`);
 
   return (
     <View className={clsx(styles, "mb-6")}>
@@ -26,7 +19,7 @@ export const Controller = ({ styles, zoneNumber, plantSpot }: Props) => {
         icon="Fan"
         value={controls?.fan}
         onToggle={() => {
-          toggleController(zoneNumber, "fan", plantSpot, controls?.fan);
+          toggleController("fan", controls?.fan);
         }}
         onSettings={() => {}}
         colorScheme={{
@@ -42,7 +35,7 @@ export const Controller = ({ styles, zoneNumber, plantSpot }: Props) => {
         icon="Lightbulb"
         value={controls?.light}
         onToggle={() => {
-          toggleController(zoneNumber, "light", plantSpot, controls?.light);
+          toggleController("light", controls?.light);
         }}
         onSettings={() => {}}
         colorScheme={{
@@ -56,9 +49,9 @@ export const Controller = ({ styles, zoneNumber, plantSpot }: Props) => {
       <ControllerCard
         title="Sprinkler"
         icon="Droplet"
-        value={sprinkler}
+        value={controls?.sprinkler}
         onToggle={() => {
-          toggleController(zoneNumber, "sprinkler", plantSpot, sprinkler);
+          toggleController("sprinkler", controls?.sprinkler);
         }}
         onSettings={() => {}}
         colorScheme={{

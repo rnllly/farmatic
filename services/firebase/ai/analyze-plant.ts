@@ -3,7 +3,6 @@ import { cloudinaryUpload } from "@/services/cloudinary";
 import { generateResult } from "@/utils/ai/generate-result";
 import { getBase64Data } from "@/utils/image";
 import { createAnalysis } from "../firestore/plants/create-analysis";
-import { setRecommendedThresholds } from "../real-time/thresholds";
 import { isPlantImage } from "./is-image-plant";
 
 interface Props {
@@ -14,8 +13,6 @@ interface Props {
   imageUri: string;
   imageType: string;
   base64?: string;
-  zoneNumber?: number;
-  plantSpot?: number;
   type?: "analyze" | "identify";
 }
 
@@ -27,8 +24,6 @@ export const analyzePlant = async ({
   imageUri,
   imageType,
   base64,
-  zoneNumber,
-  plantSpot,
   type = "analyze",
 }: Props) => {
   try {
@@ -56,15 +51,6 @@ export const analyzePlant = async ({
       adminId,
       analysis: { ...result.analysis, imageUrl: image },
     });
-
-    if (zoneNumber && plantSpot && result.thresholds) {
-      await setRecommendedThresholds(zoneNumber, plantSpot, {
-        soilMoisture: result.thresholds.sprinkler.soilMoisture,
-        lightLevel: result.thresholds.light.lightLevel,
-        temperature: result.thresholds.fan.temperature,
-        humidity: result.thresholds.fan.humidity,
-      });
-    }
 
     return result;
   } catch (err) {

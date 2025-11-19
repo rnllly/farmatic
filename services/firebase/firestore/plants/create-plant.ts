@@ -19,19 +19,6 @@ export const createPlant = async (data: any, userId: string) => {
       createdAt: new Date(),
     });
 
-    // const plantId = plantRef.id;
-
-    // await analyzePlant({
-    //   plantId,
-    //   analyzerId: userId,
-    //   adminId: userId,
-    //   plantName: data.name,
-    //   imageUri: data.imageUrl,
-    //   imageType: data.imageType,
-    //   zoneNumber: data.zoneNumber,
-    //   plantSpot: data.plantSpot,
-    // });
-
     return { isSuccess: true, message: "Plant added successfully" };
   } catch (error: any) {
     console.error("Error creating plant:", error);

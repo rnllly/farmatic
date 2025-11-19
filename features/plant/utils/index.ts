@@ -8,32 +8,3 @@ export function getReadableLightLevel(lux: number): string {
   return "Blinding";
 }
 
-export function getSoilMoisture(zoneData: any, plantSpot: number) {
-  if (!zoneData) return null;
-
-  switch (plantSpot) {
-    case 1:
-      return zoneData.soilMoisture1;
-    case 2:
-      return zoneData.soilMoisture2;
-    case 3:
-      return zoneData.soilMoisture3;
-    default:
-      return null;
-  }
-}
-
-export function getSprinkler(zoneData: any, plantSpot: number) {
-  if (!zoneData) return null;
-
-  switch (plantSpot) {
-    case 1:
-      return zoneData.sprinkler1;
-    case 2:
-      return zoneData.sprinkler2;
-    case 3:
-      return zoneData.sprinkler3;
-    default:
-      return null;
-  }
-}

@@ -3,17 +3,8 @@ import { Text, View } from "react-native";
 import { EnvironmentalStatusCard } from "../components/environmental-status-card";
 import { getReadableLightLevel } from "../utils";
 
-export const EnvironmentalStatus = ({
-  zoneNumber,
-  plantSpot,
-}: {
-  zoneNumber: Number;
-  plantSpot: Number;
-}) => {
-  const { data } = useRealtimeDatabase(`sensors/zones/${zoneNumber}`);
-  const { data: soilMoisture } = useRealtimeDatabase(
-    `sensors/zones/${zoneNumber}/soilMoisture/${plantSpot}`
-  );
+export const EnvironmentalStatus = () => {
+  const { data } = useRealtimeDatabase(`sensors`);
 
   const lightLevel = getReadableLightLevel(+data?.lightLevel);
 
@@ -46,7 +37,7 @@ export const EnvironmentalStatus = ({
           />
           <EnvironmentalStatusCard
             title="Soil Moisture"
-            value={`${soilMoisture ?? 0}%`}
+            value={`${data?.soilMoisture ?? 0}%`}
             icon="Sprout"
             iconColor="green"
           />

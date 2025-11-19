@@ -76,8 +76,6 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
         plantName: plant.name,
         imageUri: image.uri,
         imageType: type,
-        zoneNumber: plant?.zoneNumber,
-        plantSpot: plant?.plantSpot,
       });
     } catch (err) {
       console.error(err);
@@ -143,14 +141,8 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
             description: analysisData?.[0]?.analysis?.description,
           }}
         />
-        <EnvironmentalStatus
-          zoneNumber={plant?.zoneNumber}
-          plantSpot={plant?.plantSpot}
-        />
-        <Controller
-          zoneNumber={plant?.zoneNumber}
-          plantSpot={plant?.plantSpot}
-        />
+        <EnvironmentalStatus />
+        <Controller />
         <Button
           label="Analyze Plant"
           onPress={handlePress}
