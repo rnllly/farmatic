@@ -1,4 +1,3 @@
-import { Button } from "@/components/form/button";
 import { Header } from "@/components/header";
 import { Image } from "@/components/image";
 import { MainLayout } from "@/components/layout/main-layout";
@@ -31,7 +30,6 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
   ]);
 
   if (loading) return <Loader />;
-  if (!plant) return null;
 
   const confirmDelete = () => {
     if (isAnalyzing) return;
@@ -85,7 +83,6 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
       router.push({
         pathname: "/plant/analyze-plant-history",
         params: {
-          plantId: plant.id,
           adminId,
         },
       });
@@ -93,29 +90,29 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
     }
   };
 
-  const handlePress = async () => {
-    if (isAnalyzing) return;
-    return Alert.alert(
-      "Upload Plant Photo",
-      "Select a source to analyze your plant",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Gallery",
-          style: "default",
-          onPress: async () => await handleSelectImage("gallery"),
-        },
-        {
-          text: "Camera",
-          style: "default",
-          onPress: async () => await handleSelectImage("camera"),
-        },
-      ]
-    );
-  };
+  // const handlePress = async () => {
+  //   if (isAnalyzing) return;
+  //   return Alert.alert(
+  //     "Upload Plant Photo",
+  //     "Select a source to analyze your plant",
+  //     [
+  //       {
+  //         text: "Cancel",
+  //         style: "cancel",
+  //       },
+  //       {
+  //         text: "Gallery",
+  //         style: "default",
+  //         onPress: async () => await handleSelectImage("gallery"),
+  //       },
+  //       {
+  //         text: "Camera",
+  //         style: "default",
+  //         onPress: async () => await handleSelectImage("camera"),
+  //       },
+  //     ]
+  //   );
+  // };
 
   return (
     <MainLayout>
@@ -143,7 +140,7 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
         />
         <EnvironmentalStatus />
         <Controller />
-        <Button
+        {/* <Button
           label="Analyze Plant"
           onPress={handlePress}
           styles="mb-2"
@@ -156,13 +153,12 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
             router.push({
               pathname: "/plant/analyze-plant-history",
               params: {
-                plantId: plant.id,
                 adminId,
               },
             })
           }
           isLoading={isAnalyzing}
-        />
+        /> */}
       </ScreenContainer>
     </MainLayout>
   );

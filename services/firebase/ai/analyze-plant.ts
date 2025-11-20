@@ -6,10 +6,10 @@ import { createAnalysis } from "../firestore/plants/create-analysis";
 import { isPlantImage } from "./is-image-plant";
 
 interface Props {
-  plantId: string | null;
+  plantId?: string | null;
   analyzerId: string;
   adminId: string;
-  plantName: string;
+  plantName?: string;
   imageUri: string;
   imageType: string;
   base64?: string;
@@ -38,15 +38,12 @@ export const analyzePlant = async ({
     if (!isPlant) return null;
 
     const result = await generateResult(
-      type === "analyze"
-        ? ANALYZE_GREENHOUSE_PLANT(plantName)
-        : ANALYZE_PLANT_BY_IMAGE,
+      type === "analyze" ? ANALYZE_GREENHOUSE_PLANT : ANALYZE_PLANT_BY_IMAGE,
       base64Data,
       imageType
     );
 
     await createAnalysis({
-      plantId: plantId || null,
       analyzerId,
       adminId,
       analysis: { ...result.analysis, imageUrl: image },

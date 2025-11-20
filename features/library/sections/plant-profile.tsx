@@ -12,13 +12,13 @@ export const PlantProfile = ({ data }: Props) => (
       <Text className="text-2xl font-bold text-green-500">Plant Profile</Text>
     </View>
     <BaseCard styles="mb-6">
-      <PlantProfileRow icon="Clock" label="Cycle" value={data?.cycle} />
+      {/* <PlantProfileRow icon="Clock" label="Cycle" value={data?.cycle} /> */}
       <PlantProfileRow
         icon="Star"
         label="Care Level"
         value={data?.care_level}
       />
-      <PlantProfileRow
+      {/* <PlantProfileRow
         icon="Sprout"
         label="Attracts"
         value={data?.attracts?.length ? data.attracts.join(", ") : "N/A"}
@@ -59,7 +59,7 @@ export const PlantProfile = ({ data }: Props) => (
         label="Medical"
         value={data?.medicinal ? "Yes" : "No"}
         showDivider={false}
-      />
+      /> */}
     </BaseCard>
   </>
 );

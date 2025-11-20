@@ -1,7 +1,6 @@
-export const ANALYZE_GREENHOUSE_PLANT = (plantName: string) => {
-  return `
+export const ANALYZE_GREENHOUSE_PLANT = `
   You are a plant expert.
-  Analyze the provided photo of a ${plantName}.
+  Analyze the provided photo.
   
   The result should be in the following format:
   {
@@ -32,7 +31,6 @@ export const ANALYZE_GREENHOUSE_PLANT = (plantName: string) => {
   - Do not return descriptive ranges like "30-60%" or "Bright light". Instead, pick the most recommended numeric value.
   - Do not include commentary outside the JSON.
 `;
-};
 
 export const ANALYZE_PLANT_BY_IMAGE = `
   You are a plant expert.

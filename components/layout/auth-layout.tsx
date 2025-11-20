@@ -44,7 +44,7 @@ export const AuthLayout = ({
               <View className="items-center justify-center flex-1 flex-shrink pb-8">
                 <Image
                   source={require("@/assets/images/logo.png")}
-                  className="w-20 h-20 mb-2"
+                  className="w-20 h-20"
                 />
                 <Text className="text-white text-5xl font-bold mb-2">
                   Farmatic

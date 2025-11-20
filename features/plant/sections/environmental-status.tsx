@@ -16,6 +16,26 @@ export const EnvironmentalStatus = () => {
       <View className="gap-2">
         <View className="flex-row gap-2">
           <EnvironmentalStatusCard
+            title="Soil Moisture 1"
+            value={`${data?.soilMoisture ?? 0}%`}
+            icon="Sprout"
+            iconColor="green"
+          />
+          <EnvironmentalStatusCard
+            title="Soil Moisture 2"
+            value={`${data?.soilMoisture ?? 0}%`}
+            icon="Sprout"
+            iconColor="green"
+          />
+          <EnvironmentalStatusCard
+            title="Soil Moisture 3"
+            value={`${data?.soilMoisture ?? 0}%`}
+            icon="Sprout"
+            iconColor="green"
+          />
+        </View>
+        <View className="flex-row gap-2">
+          <EnvironmentalStatusCard
             title="Temperature"
             value={`${data?.temperature ?? 0}°C`}
             icon="Thermometer"
@@ -27,19 +47,11 @@ export const EnvironmentalStatus = () => {
             icon="Droplet"
             iconColor="blue"
           />
-        </View>
-        <View className="flex-row gap-2">
           <EnvironmentalStatusCard
             title="Light Level"
             value={lightLevel}
             icon="Sun"
             iconColor="orange"
-          />
-          <EnvironmentalStatusCard
-            title="Soil Moisture"
-            value={`${data?.soilMoisture ?? 0}%`}
-            icon="Sprout"
-            iconColor="green"
           />
         </View>
       </View>

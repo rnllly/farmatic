@@ -18,9 +18,9 @@ export const Controller = ({ styles }: Props) => {
         title="Fan"
         icon="Fan"
         value={controls?.fan}
-        onToggle={() => {
-          toggleController("fan", controls?.fan);
-        }}
+        // onToggle={() => {
+        //   toggleController("fan", controls?.fan);
+        // }}
         onSettings={() => {}}
         colorScheme={{
           iconBgClass: "bg-green-100",
@@ -30,7 +30,7 @@ export const Controller = ({ styles }: Props) => {
           statusTextClass: "text-green-700",
         }}
       />
-      {/* <ControllerCard
+      <ControllerCard
         title="Light"
         icon="Lightbulb"
         value={controls?.light}
@@ -45,14 +45,14 @@ export const Controller = ({ styles }: Props) => {
           statusBgClass: "bg-yellow-50",
           statusTextClass: "text-yellow-700",
         }}
-      /> */}
+      />
       <ControllerCard
         title="Sprinkler"
         icon="Droplet"
         value={controls?.sprinkler}
-        onToggle={() => {
-          toggleController("sprinkler", controls?.sprinkler);
-        }}
+        // onToggle={() => {
+        //   toggleController("sprinkler", controls?.sprinkler);
+        // }}
         onSettings={() => {}}
         colorScheme={{
           iconBgClass: "bg-blue-100",

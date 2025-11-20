@@ -17,7 +17,7 @@ export const GreenhousePlantList = ({ data, loading }: Props) => {
       <EmptyState
         title="No Greenhouse Plants Yet"
         description="Your greenhouse plants will appear here. Start by adding your first plant."
-        buttonText="Add Plant"
+        buttonText="Add Plants"
         onPress={() => router.push("/plant/add-plant")}
       />
     );

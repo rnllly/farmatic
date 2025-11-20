@@ -1,40 +1,41 @@
 import { Header } from "@/components/header";
 import { MainLayout } from "@/components/layout/main-layout";
+import { useAuth } from "@/hooks/use-auth";
+import { useRealTimeFetch } from "@/hooks/use-real-time-fetch";
+import { analyzePlant } from "@/services/firebase/ai";
 import { getImageType, pickImage, takePhoto } from "@/utils/image";
-import { router } from "expo-router";
-import { Alert, View } from "react-native";
+import { useRouter } from "expo-router";
+import { limit, orderBy, where } from "firebase/firestore";
+import { Alert, ToastAndroid, View } from "react-native";
 import { HowItWorks } from "../sections/how-it-works";
 import { IdentifyMethod } from "../sections/identify-method";
 
 export const IdentifierScreen = () => {
+  const router = useRouter();
+  const { adminId, user } = useAuth();
+  const { data: analysisData } = useRealTimeFetch("analyses", [
+    where("adminId", "==", adminId || ""),
+    orderBy("createdAt", "desc"),
+    limit(1),
+  ]);
   const handleSelectImage = async (mode: "camera" | "gallery") => {
     try {
       const image = mode === "camera" ? await takePhoto() : await pickImage();
-
       if (!image) return;
 
       const type = getImageType(image.uri);
 
-      router.push({
-        pathname: "/plant/analyze-plant",
-        params: {
-          imageUri: image.uri,
-          type,
-        },
+      await analyzePlant({
+        analyzerId: user?.id as string,
+        adminId: adminId as string,
+        imageUri: image.uri,
+        imageType: type,
       });
     } catch (err) {
       console.error(err);
-      const message = (err as any)?.message || (err as any)?.code;
-      if (message === "PERMISSION_DENIED") {
-        Alert.alert(
-          "Permission denied",
-          mode === "camera"
-            ? "Camera permission is required to take a photo. Please enable it in Settings."
-            : "Photo library permission is required to select an image. Please enable it in Settings."
-        );
-        return;
-      }
       Alert.alert("Error", "Could not analyze the image.");
+    } finally {
+      ToastAndroid.show("Plant analyzed successfully", ToastAndroid.SHORT);
     }
   };
 
