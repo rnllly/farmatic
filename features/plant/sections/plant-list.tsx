@@ -8,7 +8,7 @@ interface Props {
   data: any[];
   loading: boolean;
 }
-export const SelectPlantList = ({ data, loading }: Props) => {
+export const PlantList = ({ data, loading }: Props) => {
   if (loading) return <Loader />;
 
   if (!data || data.length === 0) {
@@ -36,7 +36,7 @@ export const SelectPlantList = ({ data, loading }: Props) => {
           name={item.name}
           onPress={() =>
             router.push({
-              pathname: "/plant/select/[id]",
+              pathname: "/plant/greenhouse/[id]",
               params: { id: item.id },
             })
           }

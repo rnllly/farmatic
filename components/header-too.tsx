@@ -3,7 +3,7 @@ import { icons } from "lucide-react-native";
 import { Image, Text, View } from "react-native";
 import { HeaderIcon } from "./header-icon";
 
-export function Header({
+export function HeaderToo({
   image,
   title,
   description,
@@ -27,11 +27,6 @@ export function Header({
           <HeaderIcon icon="ArrowLeft" onPress={() => router.back()} />
         )}
         <View className="items-center justify-between flex-row">
-          <Image
-            source={require("@/assets/images/logo.png")}
-            className="w-16 h-16 rounded-xl"
-            resizeMode="contain"
-          />
           <View>
             <Text className="text-2xl font-bold text-white">{title}</Text>
             <Text className="text-white">{description}</Text>

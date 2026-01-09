@@ -28,7 +28,7 @@ export const PlantAnalysisScreen = ({
         const base64Data = await getBase64Data(imageUri);
 
         const result = await analyzePlant({
-          plantId: null,
+          plantId: "",
           analyzerId: "",
           adminId: "",
           plantName: "",

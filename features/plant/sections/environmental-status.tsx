@@ -4,7 +4,7 @@ import { EnvironmentalStatusCard } from "../components/environmental-status-card
 import { getReadableLightLevel } from "../utils";
 
 export const EnvironmentalStatus = () => {
-  const { data } = useRealtimeDatabase(`sensors`);
+  const { data } = useRealtimeDatabase(`sensor`);
 
   const lightLevel = getReadableLightLevel(+data?.lightLevel);
 
@@ -17,19 +17,19 @@ export const EnvironmentalStatus = () => {
         <View className="flex-row gap-2">
           <EnvironmentalStatusCard
             title="Soil Moisture 1"
-            value={`${data?.soilMoisture ?? 0}%`}
+            value={`${data?.soilMoisture1 ?? 0}%`}
             icon="Sprout"
             iconColor="green"
           />
           <EnvironmentalStatusCard
             title="Soil Moisture 2"
-            value={`${data?.soilMoisture ?? 0}%`}
+            value={`${data?.soilMoisture2 ?? 0}%`}
             icon="Sprout"
             iconColor="green"
           />
           <EnvironmentalStatusCard
             title="Soil Moisture 3"
-            value={`${data?.soilMoisture ?? 0}%`}
+            value={`${data?.soilMoisture3 ?? 0}%`}
             icon="Sprout"
             iconColor="green"
           />
@@ -46,12 +46,6 @@ export const EnvironmentalStatus = () => {
             value={`${data?.humidity ?? 0}%`}
             icon="Droplet"
             iconColor="blue"
-          />
-          <EnvironmentalStatusCard
-            title="Light Level"
-            value={lightLevel}
-            icon="Sun"
-            iconColor="orange"
           />
         </View>
       </View>

@@ -7,7 +7,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useFetch } from "@/hooks/use-fetch";
 import { useRealTimeFetch } from "@/hooks/use-real-time-fetch";
 import { analyzePlant } from "@/services/firebase/ai";
-import { deletePlant, getPlant } from "@/services/firebase/firestore/plants";
+import { getPlant, plantDelete } from "@/services/firebase/firestore/plants";
 import { getImageType, pickImage, takePhoto } from "@/utils/image";
 import { useRouter } from "expo-router";
 import { limit, orderBy, where } from "firebase/firestore";
@@ -32,7 +32,6 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
   if (loading) return <Loader />;
 
   const confirmDelete = () => {
-    if (isAnalyzing) return;
     if (!plant?.id) return;
 
     Alert.alert(
@@ -46,8 +45,7 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
           onPress: async () => {
             try {
               router.back();
-              const result = await deletePlant(plant.id as string);
-
+              const result = await plantDelete(plant.id as string);
               if (!result.isSuccess)
                 return Alert.alert("Error", result.message);
             } catch (e: any) {
@@ -83,6 +81,7 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
       router.push({
         pathname: "/plant/analyze-plant-history",
         params: {
+          plantId: plant.id,
           adminId,
         },
       });
@@ -90,29 +89,29 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
     }
   };
 
-  // const handlePress = async () => {
-  //   if (isAnalyzing) return;
-  //   return Alert.alert(
-  //     "Upload Plant Photo",
-  //     "Select a source to analyze your plant",
-  //     [
-  //       {
-  //         text: "Cancel",
-  //         style: "cancel",
-  //       },
-  //       {
-  //         text: "Gallery",
-  //         style: "default",
-  //         onPress: async () => await handleSelectImage("gallery"),
-  //       },
-  //       {
-  //         text: "Camera",
-  //         style: "default",
-  //         onPress: async () => await handleSelectImage("camera"),
-  //       },
-  //     ]
-  //   );
-  // };
+  const handlePress = async () => {
+    if (isAnalyzing) return;
+    return Alert.alert(
+      "Upload Plant Photo",
+      "Select a source to analyze your plant",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Gallery",
+          style: "default",
+          onPress: async () => await handleSelectImage("gallery"),
+        },
+        {
+          text: "Camera",
+          style: "default",
+          onPress: async () => await handleSelectImage("camera"),
+        },
+      ]
+    );
+  };
 
   return (
     <MainLayout>
@@ -123,7 +122,6 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
         rightIcon="Trash"
         onRightIconPress={confirmDelete}
       />
-
       <ScreenContainer scrollable>
         <Image
           uri={analysisData?.[0]?.analysis?.imageUrl || plant?.imageUrl}
@@ -134,8 +132,6 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
           styles="mb-6"
           plant={{
             ...plant,
-            healthStatus: analysisData?.[0]?.analysis?.healthStatus,
-            description: analysisData?.[0]?.analysis?.description,
           }}
         />
         <EnvironmentalStatus />
@@ -153,6 +149,7 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
             router.push({
               pathname: "/plant/analyze-plant-history",
               params: {
+                plantId: plant.id,
                 adminId,
               },
             })

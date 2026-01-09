@@ -10,13 +10,13 @@ export const createPlant = async (data: any, userId: string) => {
       imageUrl = await cloudinaryUpload(data.imageUrl);
     }
 
-    const ref = collection(db, "plants");
+    const ref = collection(db, "plantList");
 
     await addDoc(ref, {
       ...data,
       imageUrl,
       adminId: userId,
-      createdAt: new Date(),
+      plantedAt: new Date(),
     });
 
     return { isSuccess: true, message: "Plant added successfully" };

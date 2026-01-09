@@ -1,5 +1,4 @@
 import { Divider } from "@/components/divider";
-import { formatFirestoreDate } from "@/utils/date";
 import clsx from "clsx";
 import { Text, View } from "react-native";
 import { PlantInfoRow } from "../components/plant-info-row";
@@ -26,13 +25,23 @@ export const PlantInfoSection = ({ plant, styles }: Props) => {
           <Divider />
         </View>
         <PlantInfoRow
-          label="Date Planted"
-          value={formatFirestoreDate(plant.datePlanted)}
+          label="Prefered Moisture"
+          value={`${plant.soilMoistureRange?.min}% - ${plant.soilMoistureRange?.max}%`}
+        />
+        {/* <View className="py-3">
+          <Divider />
+        </View>
+        <PlantInfoRow
+          label="Prefered Humidity"
+          value={`${plant.humidityRange?.min}% - ${plant.humidityRange?.max}%`}
         />
         <View className="py-3">
           <Divider />
         </View>
-        <PlantInfoRow label="Status" value={plant.healthStatus} />
+        <PlantInfoRow
+          label="Prefered Humidity"
+          value={`${plant.temperatureRange?.min}% - ${plant.temperatureRange?.max}%`}
+        /> */}
       </View>
     </View>
   );

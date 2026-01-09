@@ -26,7 +26,7 @@ export const GreenhousePlantList = ({ data, loading }: Props) => {
   return (
     <FlatList
       data={data}
-      keyExtractor={(item) => item.id?.toString() || `item-${Math.random()}`}
+      keyExtractor={(item, index) => item.id?.toString() || index.toString()}
       showsVerticalScrollIndicator={false}
       numColumns={2}
       columnWrapperStyle={{ gap: 12 }}

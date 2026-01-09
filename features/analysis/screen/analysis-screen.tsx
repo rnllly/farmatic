@@ -2,7 +2,7 @@ import { Header } from "@/components/header";
 import { MainLayout } from "@/components/layout/main-layout";
 import { useAuth } from "@/hooks/use-auth";
 import { useRealTimeFetch } from "@/hooks/use-real-time-fetch";
-import { where } from "firebase/firestore";
+import { orderBy, where } from "firebase/firestore";
 import { useState } from "react";
 import { View } from "react-native";
 import { TabSwitcher } from "../components/tab-switcher";
@@ -21,6 +21,7 @@ export const AnalysisScreen = () => {
 
   const { data: analysisHistory } = useRealTimeFetch("analyses", [
     where("adminId", "==", adminId || ""),
+    orderBy("createdAt", "desc"),
   ]);
 
   const tabs = [

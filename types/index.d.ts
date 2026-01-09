@@ -19,6 +19,7 @@ interface Plant {
   name: string;
   imageUrl: string;
   datePlanted: string | null;
+  isChosen?: boolean;
   status?: string;
   createdAt?: any;
   userId?: string;

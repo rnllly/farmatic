@@ -2,7 +2,6 @@ import { Button } from "@/components/form/button";
 import { FormInput } from "@/components/form/form-input";
 import { Header } from "@/components/header";
 import { MainLayout } from "@/components/layout/main-layout";
-import { SelectPlantList } from "@/features/plant/sections/select-plant-list";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useFetch } from "@/hooks/use-fetch";
 import { getPlants } from "@/services/perenual";
@@ -74,13 +73,6 @@ export const SelectPlantScreen = () => {
           styles="mb-6"
         />
       </View>
-
-      <SelectPlantList
-        data={data}
-        loading={loading}
-        handlePlantSelect={handlePlantSelect}
-        selectedPlant={selectedPlant}
-      />
     </MainLayout>
   );
 };

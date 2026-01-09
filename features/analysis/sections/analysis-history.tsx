@@ -1,6 +1,8 @@
+import { EmptyState } from "@/components/empty-state";
 import { Icon } from "@/components/icon";
 import { Image } from "@/components/image";
 import { formatFirestoreDate } from "@/utils/date";
+import { router } from "expo-router";
 import { FlatList, Text, View } from "react-native";
 
 interface AnalysisItem {
@@ -66,16 +68,16 @@ export const AnalysisHistory = ({ data, loading }: Props) => {
       </View>
     );
   }
-  // if (!data || data.length === 0) {
-  //   return (
-  //     <EmptyState
-  //       title="No Analysis History Yet"
-  //       description="Your analysis history will appear here. Start by analyzing your first plant."
-  //       buttonText="Analyze Plants"
-  //       onPress={() => router.push("/home")}
-  //     />
-  //   );
-  // }
+  if (!data || data.length === 0) {
+    return (
+      <EmptyState
+        title="No Analysis History Yet"
+        description="Your analysis history will appear here. Start by analyzing your first plant."
+        buttonText="Analyze Plants"
+        onPress={() => router.push("/home")}
+      />
+    );
+  }
 
   return (
     <FlatList
@@ -84,7 +86,7 @@ export const AnalysisHistory = ({ data, loading }: Props) => {
         item.id?.toString() || `analysis-${Math.random()}`
       }
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ padding: 24 }}
+      contentContainerStyle={{ padding: 15 }}
       overScrollMode="never"
       renderItem={({ item, index }) => (
         <View
@@ -98,7 +100,7 @@ export const AnalysisHistory = ({ data, loading }: Props) => {
               </Text>
             </View>
             <View
-              className={`px-4 py-1 rounded-full ${getHealthStatusColor(
+              className={`px-2 py-1 rounded-full ${getHealthStatusColor(
                 item.analysis.healthStatus
               )}`}
             >
@@ -107,7 +109,6 @@ export const AnalysisHistory = ({ data, loading }: Props) => {
               </Text>
             </View>
           </View>
-
           <View className="p-4">
             <View className="flex-row gap-4 mb-4">
               <Image

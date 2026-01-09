@@ -1,6 +1,5 @@
 import { ControllerCard } from "@/features/plant/components/controller-card";
 import { useRealtimeDatabase } from "@/hooks/use-real-time-databases";
-import { toggleController } from "@/services/firebase/firestore/controllers";
 import clsx from "clsx";
 import { Text, View } from "react-native";
 
@@ -9,7 +8,7 @@ interface Props {
 }
 
 export const Controller = ({ styles }: Props) => {
-  const { data: controls } = useRealtimeDatabase(`controllers`);
+  const { data: controls } = useRealtimeDatabase(`controller`);
 
   return (
     <View className={clsx(styles, "mb-6")}>
@@ -17,11 +16,10 @@ export const Controller = ({ styles }: Props) => {
       <ControllerCard
         title="Fan"
         icon="Fan"
-        value={controls?.fan}
+        value={controls?.fan.openedAt}
         // onToggle={() => {
         //   toggleController("fan", controls?.fan);
         // }}
-        onSettings={() => {}}
         colorScheme={{
           iconBgClass: "bg-green-100",
           iconColor: "#059669",
@@ -30,7 +28,7 @@ export const Controller = ({ styles }: Props) => {
           statusTextClass: "text-green-700",
         }}
       />
-      <ControllerCard
+      {/* <ControllerCard
         title="Light"
         icon="Lightbulb"
         value={controls?.light}
@@ -45,15 +43,44 @@ export const Controller = ({ styles }: Props) => {
           statusBgClass: "bg-yellow-50",
           statusTextClass: "text-yellow-700",
         }}
-      />
+      /> */}
       <ControllerCard
-        title="Sprinkler"
+        title="Sprinkler 1"
         icon="Droplet"
-        value={controls?.sprinkler}
+        value={controls?.sprinkler1.openedAt}
         // onToggle={() => {
         //   toggleController("sprinkler", controls?.sprinkler);
         // }}
-        onSettings={() => {}}
+        colorScheme={{
+          iconBgClass: "bg-blue-100",
+          iconColor: "#60a5fa",
+          switchOnColor: "#60a5fa",
+          statusBgClass: "bg-blue-50",
+          statusTextClass: "text-blue-700",
+        }}
+      />
+      <ControllerCard
+        title="Sprinkler 2"
+        icon="Droplet"
+        value={controls?.sprinkler2.openedAt}
+        // onToggle={() => {
+        //   toggleController("sprinkler", controls?.sprinkler);
+        // }}
+        colorScheme={{
+          iconBgClass: "bg-blue-100",
+          iconColor: "#60a5fa",
+          switchOnColor: "#60a5fa",
+          statusBgClass: "bg-blue-50",
+          statusTextClass: "text-blue-700",
+        }}
+      />
+      <ControllerCard
+        title="Sprinkler 3"
+        icon="Droplet"
+        value={controls?.sprinkler3.openedAt}
+        // onToggle={() => {
+        //   toggleController("sprinkler", controls?.sprinkler);
+        // }}
         colorScheme={{
           iconBgClass: "bg-blue-100",
           iconColor: "#60a5fa",

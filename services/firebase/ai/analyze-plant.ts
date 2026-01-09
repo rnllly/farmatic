@@ -44,6 +44,7 @@ export const analyzePlant = async ({
     );
 
     await createAnalysis({
+      plantId: plantId || null,
       analyzerId,
       adminId,
       analysis: { ...result.analysis, imageUrl: image },

@@ -12,10 +12,18 @@ import { Controller, useForm } from "react-hook-form";
 import { Alert, ToastAndroid } from "react-native";
 import { ImagePicker } from "../sections/image-picker";
 
+interface Range {
+  min: number;
+  max: number;
+}
 interface Props {
   selectedPlantId?: string;
   selectedPlantName?: string;
   selectedPlantImage?: string;
+  selectedPlantMoistureRange?: Range;
+  selectedPlantTemperatureRange?: Range;
+  selectedPlantHumidityRange?: Range;
+  selectedPlantDescription?: string;
 }
 
 export const AddPlantScreen = (selectedPlant: Props) => {
@@ -24,8 +32,11 @@ export const AddPlantScreen = (selectedPlant: Props) => {
   const hasSelectedPlant =
     selectedPlant.selectedPlantId &&
     selectedPlant.selectedPlantName &&
+    selectedPlant.selectedPlantMoistureRange &&
+    selectedPlant.selectedPlantTemperatureRange &&
+    selectedPlant.selectedPlantHumidityRange &&
+    selectedPlant.selectedPlantDescription &&
     selectedPlant.selectedPlantImage;
-
   const {
     control,
     handleSubmit,
@@ -38,7 +49,23 @@ export const AddPlantScreen = (selectedPlant: Props) => {
         ? (selectedPlant.selectedPlantImage as string)
         : "",
       imageType: "",
-      datePlanted: new Date(),
+      plantedAt: new Date(),
+      isChosen: false,
+      description: hasSelectedPlant
+        ? (selectedPlant.selectedPlantDescription as string)
+        : "",
+      humidityRange: selectedPlant.selectedPlantHumidityRange ?? {
+        min: 0,
+        max: 0,
+      },
+      soilMoistureRange: selectedPlant.selectedPlantMoistureRange ?? {
+        min: 0,
+        max: 0,
+      },
+      temperatureRange: selectedPlant.selectedPlantTemperatureRange ?? {
+        min: 0,
+        max: 0,
+      },
     },
   });
 
@@ -60,7 +87,12 @@ export const AddPlantScreen = (selectedPlant: Props) => {
     name: string;
     imageUrl: string;
     imageType: string;
-    datePlanted: Date;
+    plantedAt: Date;
+    isChosen: boolean;
+    description: string;
+    soilMoistureRange: { min: number; max: number };
+    temperatureRange: { min: number; max: number };
+    humidityRange: { min: number; max: number };
   }) => {
     try {
       const result = await createPlant(data, adminId);
@@ -119,7 +151,119 @@ export const AddPlantScreen = (selectedPlant: Props) => {
         />
         <Controller
           control={control}
-          name="datePlanted"
+          name="description"
+          rules={{ required: "Required" }}
+          render={({ field: { onChange, value } }) => (
+            <FormInput
+              label="Description"
+              placeholder="Enter plant description"
+              value={value}
+              onChangeText={onChange}
+              iconName="Sprout"
+              styles="mb-6"
+              error={errors.description?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="soilMoistureRange.max"
+          rules={{ required: "Required" }}
+          render={({ field: { onChange, value } }) => (
+            <FormInput
+              label="Soil Moisture(Max)"
+              placeholder="Enter plant soil moisture"
+              value={value.toString()}
+              onChangeText={(text) => onChange(parseFloat(text) || 0)}
+              iconName="Sprout"
+              styles="mb-6"
+              error={errors.soilMoistureRange?.max?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="soilMoistureRange.min"
+          rules={{ required: "Required" }}
+          render={({ field: { onChange, value } }) => (
+            <FormInput
+              label="Soil Moisture(Min)"
+              placeholder="Enter plant soil moisture"
+              value={value.toString()}
+              onChangeText={(text) => onChange(parseFloat(text) || 0)}
+              iconName="Sprout"
+              styles="mb-6"
+              error={errors.soilMoistureRange?.min?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="humidityRange.max"
+          rules={{ required: "Required" }}
+          render={({ field: { onChange, value } }) => (
+            <FormInput
+              label="Humidity(Max)"
+              placeholder="Enter plant humidity"
+              value={value.toString()}
+              onChangeText={(text) => onChange(parseFloat(text) || 0)}
+              iconName="Sprout"
+              styles="mb-6"
+              error={errors.humidityRange?.max?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="humidityRange.min"
+          rules={{ required: "Required" }}
+          render={({ field: { onChange, value } }) => (
+            <FormInput
+              label="Humidity(Min)"
+              placeholder="Enter plant humidity"
+              value={value.toString()}
+              onChangeText={(text) => onChange(parseFloat(text) || 0)}
+              iconName="Sprout"
+              styles="mb-6"
+              error={errors.humidityRange?.min?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="temperatureRange.max"
+          rules={{ required: "Required" }}
+          render={({ field: { onChange, value } }) => (
+            <FormInput
+              label="Temperature(Max)"
+              placeholder="Enter plant temperature"
+              value={value.toString()}
+              onChangeText={(text) => onChange(parseFloat(text) || 0)}
+              iconName="Sprout"
+              styles="mb-6"
+              error={errors.temperatureRange?.max?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="temperatureRange.min"
+          rules={{ required: "Required" }}
+          render={({ field: { onChange, value } }) => (
+            <FormInput
+              label="Temperature(Min)"
+              placeholder="Enter plant temperature"
+              value={value.toString()}
+              onChangeText={(text) => onChange(parseFloat(text) || 0)}
+              iconName="Sprout"
+              styles="mb-6"
+              error={errors.temperatureRange?.min?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="plantedAt"
           render={({ field: { onChange, value } }) => (
             <DatePicker
               label="Date Planted"

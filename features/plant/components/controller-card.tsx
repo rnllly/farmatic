@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { icons } from "lucide-react-native";
 import React from "react";
-import { Switch, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Icon } from "../../../components/icon";
 
 type ColorScheme = {
@@ -32,17 +32,13 @@ function hexToRgba(hex: string, alpha: number): string {
 export function ControllerCard({
   title,
   icon,
-  value = false,
+  value,
   colorScheme,
-  onToggle,
-  onSettings,
 }: {
   title: string;
   icon: keyof typeof icons;
-  value?: boolean;
+  value: string;
   colorScheme: ColorScheme;
-  onToggle?: () => void;
-  onSettings?: () => void;
 }) {
   const onTrackColor = hexToRgba(colorScheme.switchOnColor, 0.25);
 
@@ -62,21 +58,20 @@ export function ControllerCard({
         </View>
 
         <View className="flex-row items-center">
-          <Switch
+          {/* <Switch
             value={value}
             onValueChange={onToggle}
             trackColor={{ false: "#e5e7eb", true: onTrackColor }}
             thumbColor={value ? colorScheme.switchOnColor : "#d1d5db"}
-          />
+          /> */}
         </View>
       </View>
-
       <View
         className={clsx(colorScheme.statusBgClass, "mt-4 rounded-xl px-4 py-3")}
       >
         <Text
           className={clsx(colorScheme.statusTextClass, "font-medium")}
-        >{`Status: ${value ? "Running" : "Off"}`}</Text>
+        >{`Last Opened: ${value}`}</Text>
       </View>
     </View>
   );
