@@ -26,7 +26,7 @@ export function HeaderToo({
         {showBackButton && (
           <HeaderIcon icon="ArrowLeft" onPress={() => router.back()} />
         )}
-        <View className="items-center justify-between flex-row">
+        <View className="items-center justify-between flex-row flex-1">
           <View>
             <Text className="text-2xl font-bold text-white">{title}</Text>
             <Text className="text-white">{description}</Text>

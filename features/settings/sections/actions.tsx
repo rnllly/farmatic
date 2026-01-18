@@ -24,14 +24,6 @@ export function ActionsSection() {
         onPress={() => {}}
         showBorder={false}
       />
-      {/* <SettingsItem
-        icon="LogOut"
-        title="Log Out"
-        iconColor="#EF4444"
-        titleColor="text-red-500"
-        onPress={handleLogout}
-        showBorder={false}
-      /> */}
     </BaseCard>
   );
 }

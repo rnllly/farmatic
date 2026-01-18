@@ -21,19 +21,27 @@ export const LibraryScreen = () => {
   );
 
   useEffect(() => {
-    if (data && page === 1) {
-      setPlants(data);
-    } else if (data && page > 1) {
-      setPlants((prev) => [...prev, ...data]);
+    if (data) {
+      const plantsWithImages = data.filter(
+        (plant: any) => plant.default_image?.thumbnail
+      );
+
+      if (page === 1) {
+        setPlants(plantsWithImages);
+      } else if (page > 1) {
+        setPlants((prev) => [...prev, ...plantsWithImages]);
+      }
     }
 
     setLoadingMore(false);
-  }, [data]);
+  }, [data, page]);
 
   const handleLoadMore = () => {
-    if (!loadingMore && data?.length > 0) {
+    if (!loadingMore && data?.length > 0 && !loading) {
       setLoadingMore(true);
-      setPage((prev) => prev + 1);
+      setTimeout(() => {
+        setPage((prev) => prev + 1);
+      }, 500);
     }
   };
 
@@ -50,7 +58,6 @@ export const LibraryScreen = () => {
           }}
         />
       </Header>
-
       <PlantLibraryList
         data={plants}
         loading={loading}

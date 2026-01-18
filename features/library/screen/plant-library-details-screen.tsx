@@ -1,4 +1,4 @@
-import { Header } from "@/components/header";
+import { HeaderToo } from "@/components/header-too";
 import { MainLayout } from "@/components/layout/main-layout";
 import { ScreenContainer } from "@/components/layout/screen-container";
 import { useAuth } from "@/hooks/use-auth";
@@ -40,7 +40,7 @@ export const PlantLibraryDetailsScreen = ({ id }: { id: string }) => {
 
   return (
     <MainLayout>
-      <Header
+      <HeaderToo
         title={data?.common_name}
         description={data?.scientific_name}
         showBackButton

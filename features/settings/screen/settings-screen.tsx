@@ -4,7 +4,6 @@ import { Icon } from "@/components/icon";
 import { MainLayout } from "@/components/layout/main-layout";
 import { ScreenContainer } from "@/components/layout/screen-container";
 import { AccountInfoSection } from "@/features/settings/sections/account-info";
-import { ActionsSection } from "@/features/settings/sections/actions";
 import { PersonalInfoSection } from "@/features/settings/sections/personal-info";
 import { ProfileSection } from "@/features/settings/sections/profile";
 import { StaffManagementSection } from "@/features/settings/sections/staff-management";
@@ -65,7 +64,7 @@ export const SettingsScreen = () => {
             loading={staffLoading}
           />
         )}
-        <ActionsSection />
+        {/* <ActionsSection /> */}
 
         <BaseCard styles="mt-6" padding="p-4">
           <TouchableOpacity

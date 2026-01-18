@@ -1,6 +1,6 @@
 import { Button } from "@/components/form/button";
 import { FormInput } from "@/components/form/form-input";
-import { Header } from "@/components/header";
+import { HeaderToo } from "@/components/header-too";
 import { MainLayout } from "@/components/layout/main-layout";
 import { ScreenContainer } from "@/components/layout/screen-container";
 import { createStaff } from "@/services/firebase/firestore/users";
@@ -39,7 +39,7 @@ export const AddStaffMemberScreen = () => {
 
   return (
     <MainLayout>
-      <Header
+      <HeaderToo
         title="Add New Staff"
         description="Add a new staff member to your team"
         showBackButton
