@@ -53,7 +53,7 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
             }
           },
         },
-      ]
+      ],
     );
   };
 
@@ -69,7 +69,6 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
         plantId: plant.id as string,
         analyzerId: user?.id as string,
         adminId: adminId as string,
-        plantName: plant.name,
         imageUri: image.uri,
         imageType: type,
       });
@@ -109,7 +108,7 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
           style: "default",
           onPress: async () => await handleSelectImage("camera"),
         },
-      ]
+      ],
     );
   };
 

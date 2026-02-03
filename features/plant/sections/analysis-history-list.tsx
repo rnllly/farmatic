@@ -105,11 +105,11 @@ export const AnalysisHistoryList = ({ data, loading }: Props) => {
             </View>
             <View
               className={`px-4 py-1 rounded-full ${getHealthStatusColor(
-                item.analysis.healthStatus
+                item.analysis.healthStatus,
               )}`}
             >
               <Text className="text-white text-sm font-semibold">
-                {getHealthStatusText(item.analysis.healthStatus)}
+                {getHealthStatusText(item.analysis.commoName)}
               </Text>
             </View>
           </View>
@@ -124,6 +124,9 @@ export const AnalysisHistoryList = ({ data, loading }: Props) => {
             </View>
 
             <View className="bg-gray-50 rounded-xl p-4">
+              <Text className="text-sm text-gray-600 leading-5">
+                {item.analysis.commoName}
+              </Text>
               <View className="flex-row items-center gap-2 mb-2">
                 <Icon name="Info" size={20} color="#6B7280" />
                 <Text className="text-lg font-semibold text-gray-700">

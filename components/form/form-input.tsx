@@ -29,18 +29,18 @@ export function FormInput({
 
   return (
     <View className={clsx(styles)}>
-      {label && <Text className="font-medium mb-2">{label}</Text>}
+      {label && <Text className="font-medium mb-2 text-black">{label}</Text>}
       <View
         className={clsx(
-          " border border-gray/20 rounded-xl px-4 py-1 flex-row items-center justify-between gap-2",
-          disabled ? "bg-gray/10" : "bg-white"
+          " border border-gray/20 rounded-xl px-4 py-1 flex-row items-center justify-between gap-2 text-black",
+          disabled ? "bg-gray/10" : "bg-white",
         )}
       >
         {iconName && <Icon name={iconName} size={20} color="#6B7280" />}
-        <View className="flex-1">
+        <View className="flex-1 text-black">
           <TextInput
             secureTextEntry={isPassword && !isPasswordVisible}
-            className="border-0"
+            className="border-0 text-black"
             placeholder={placeholder}
             value={value}
             onChangeText={onChangeText}
@@ -50,7 +50,7 @@ export function FormInput({
         {isPassword && (
           <Pressable onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
             <Icon
-              name={isPasswordVisible ? "EyeOff" : "Eye"}
+              name={isPasswordVisible ? "Eye" : "EyeOff"}
               size={20}
               color="#6B7280"
             />

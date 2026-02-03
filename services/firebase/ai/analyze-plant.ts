@@ -9,7 +9,7 @@ interface Props {
   plantId?: string | null;
   analyzerId: string;
   adminId: string;
-  plantName?: string;
+  commonName?: string;
   imageUri: string;
   imageType: string;
   base64?: string;
@@ -20,7 +20,7 @@ export const analyzePlant = async ({
   plantId,
   analyzerId,
   adminId,
-  plantName,
+  commonName,
   imageUri,
   imageType,
   base64,
@@ -40,7 +40,7 @@ export const analyzePlant = async ({
     const result = await generateResult(
       type === "analyze" ? ANALYZE_GREENHOUSE_PLANT : ANALYZE_PLANT_BY_IMAGE,
       base64Data,
-      imageType
+      imageType,
     );
 
     await createAnalysis({

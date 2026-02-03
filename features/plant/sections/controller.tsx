@@ -16,7 +16,7 @@ export const Controller = ({ styles }: Props) => {
       <ControllerCard
         title="Fan"
         icon="Fan"
-        value={controls?.fan.openedAt}
+        value={controls?.fan ? "On" : "Off"}
         // onToggle={() => {
         //   toggleController("fan", controls?.fan);
         // }}
@@ -28,14 +28,13 @@ export const Controller = ({ styles }: Props) => {
           statusTextClass: "text-green-700",
         }}
       />
-      {/* <ControllerCard
+      <ControllerCard
         title="Light"
         icon="Lightbulb"
-        value={controls?.light}
-        onToggle={() => {
-          toggleController("light", controls?.light);
-        }}
-        onSettings={() => {}}
+        value={controls?.light ? "On" : "Off"}
+        // onToggle={() => {
+        //   toggleController("light", controls?.light);
+        // }}
         colorScheme={{
           iconBgClass: "bg-yellow-100",
           iconColor: "#f59e0b",
@@ -43,7 +42,7 @@ export const Controller = ({ styles }: Props) => {
           statusBgClass: "bg-yellow-50",
           statusTextClass: "text-yellow-700",
         }}
-      /> */}
+      />
       <ControllerCard
         title="Sprinkler 1"
         icon="Droplet"

@@ -50,7 +50,7 @@ export const AuthLayout = ({
                   Farmatic
                 </Text>
                 <Text className="text-white text-sm">
-                  Smart Plant Care System
+                  Smart Soil Monitoring System
                 </Text>
               </View>
 

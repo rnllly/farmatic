@@ -9,7 +9,11 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.farmatic.farmatic",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
@@ -17,7 +21,8 @@
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.farmatic.farmatic"
     },
     "web": {
       "bundler": "metro",
@@ -29,9 +34,8 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/image-background.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
+          "image": "./assets/images/logo.png",
+          "resizeMode": "cover",
           "backgroundColor": "#ffffff"
         }
       ]

@@ -30,7 +30,6 @@ export const IdentifierScreen = () => {
         imageType: type,
       });
       setIsLoading(false);
-      Alert.alert("Success", "Plant identified successfully!");
       router.push("/(root)/(main)/analysis");
     } catch (err) {
       console.error(err);
@@ -40,7 +39,7 @@ export const IdentifierScreen = () => {
           "Permission denied",
           mode === "camera"
             ? "Camera permission is required to take a photo. Please enable it in Settings."
-            : "Photo library permission is required to select an image. Please enable it in Settings."
+            : "Photo library permission is required to select an image. Please enable it in Settings.",
         );
         return;
       }

@@ -21,7 +21,7 @@ function hexToRgba(hex: string, alpha: number): string {
           .map((c) => c + c)
           .join("")
       : normalized,
-    16
+    16,
   );
   const r = (bigint >> 16) & 255;
   const g = (bigint >> 8) & 255;
@@ -49,7 +49,7 @@ export function ControllerCard({
           <View
             className={clsx(
               colorScheme.iconBgClass,
-              "w-10 h-10 rounded-full  items-center justify-center"
+              "w-10 h-10 rounded-full  items-center justify-center",
             )}
           >
             <Icon name={icon} size={20} color={colorScheme.iconColor} />
@@ -69,9 +69,11 @@ export function ControllerCard({
       <View
         className={clsx(colorScheme.statusBgClass, "mt-4 rounded-xl px-4 py-3")}
       >
-        <Text
-          className={clsx(colorScheme.statusTextClass, "font-medium")}
-        >{`Last Opened: ${value}`}</Text>
+        <Text className={clsx(colorScheme.statusTextClass, "font-medium")}>
+          {title === "Light" || title === "Fan"
+            ? `Status: ${value}`
+            : `Last Opened: ${value}`}
+        </Text>
       </View>
     </View>
   );

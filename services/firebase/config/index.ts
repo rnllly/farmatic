@@ -25,7 +25,7 @@ const app = initializeApp(config);
 const db = getFirestore(app);
 const realTimeDB = getDatabase(
   app,
-  "https://farmatic-f3097-default-rtdb.firebaseio.com"
+  "https://farmatic-f3097-default-rtdb.firebaseio.com",
 );
 const storage = getStorage(app);
 

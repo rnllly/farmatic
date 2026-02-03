@@ -12,7 +12,7 @@ export const Login = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
-    defaultValues: { email: "jhongnang@gmail.com", password: "jhongjhong" },
+    defaultValues: { email: "", password: "" },
   });
 
   const onSubmit = async (data: { email: string; password: string }) => {
