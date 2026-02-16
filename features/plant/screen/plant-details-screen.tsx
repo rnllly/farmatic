@@ -16,6 +16,7 @@ import { PlantInfoSection } from "../sections/plant-info";
 export const PlantDetailsScreen = ({ id }: { id: string }) => {
   const router = useRouter();
   const { adminId } = useAuth();
+  const { user } = useAuth();
   const { data: plant, loading } = useFetch(() => getPlant(id as string), []);
   const { data: Data } = useRealTimeFetch("plantList", [
     where("adminId", "==", adminId || ""),
@@ -25,11 +26,15 @@ export const PlantDetailsScreen = ({ id }: { id: string }) => {
   if (loading || !plant) return <Loader />;
   const handlePress = async () => {
     if (!plant?.id) return;
-
     try {
-      router.push("/(root)/(main)/home");
-      const result = await choosePlant(plant.id as string);
+      const result = await choosePlant(
+        adminId as string,
+        user as string,
+        plant.id as string,
+      );
       if (!result.isSuccess) return Alert.alert("Error", result.message);
+
+      router.push("/(root)/(main)/home");
     } catch (e: any) {
       Alert.alert("Error", e?.message || "Failed to choose plant");
     }

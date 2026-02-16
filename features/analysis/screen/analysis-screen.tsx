@@ -13,7 +13,7 @@ type AnalysisActiveTab = "bookmark" | "history";
 
 export const AnalysisScreen = () => {
   const { adminId } = useAuth();
-  const [activeTab, setActiveTab] = useState<AnalysisActiveTab>("bookmark");
+  const [activeTab, setActiveTab] = useState<AnalysisActiveTab>("history");
 
   const { data: savedPlants, loading } = useRealTimeFetch("plantBookmarks", [
     where("userId", "==", adminId || ""),

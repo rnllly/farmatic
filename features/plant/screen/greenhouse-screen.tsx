@@ -3,12 +3,13 @@ import { HeaderIcon } from "@/components/header-icon";
 import { MainLayout } from "@/components/layout/main-layout";
 import { ScreenContainer } from "@/components/layout/screen-container";
 import { useRealTimeFetch } from "@/hooks/use-real-time-fetch";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { where } from "firebase/firestore";
 import { Text, View } from "react-native";
 import { PlantList } from "../sections/plant-list";
 
 export const GreenhouseScreen = () => {
+  const { adminId } = useLocalSearchParams();
   const { data, loading } = useRealTimeFetch("plantList", [
     where("isChosen", "==", true),
   ]);
