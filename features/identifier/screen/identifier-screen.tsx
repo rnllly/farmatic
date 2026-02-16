@@ -1,4 +1,4 @@
-import { Header } from "@/components/header";
+import { HeaderToo } from "@/components/header-too";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Loader } from "@/components/loader";
 import { useAuth } from "@/hooks/use-auth";
@@ -53,7 +53,7 @@ export const IdentifierScreen = () => {
         <Loader message="Analyzing plant..." />
       ) : (
         <>
-          <Header
+          <HeaderToo
             title="Plant Identifier"
             description="Identify plants by taking a photo or uploading an image"
           />

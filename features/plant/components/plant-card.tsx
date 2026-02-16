@@ -7,29 +7,28 @@ export function PlantCard({
   name,
   onPress,
   isSelected = false,
+  onImageError,
 }: {
   image: string;
   name: string;
   onPress: () => void;
   isSelected?: boolean;
+  onImageError?: () => void;
 }) {
-  const imageUrl =
-    image || "https://dummyimage.com/150x150/cccccc/000000&text=No+Image";
-
   return (
     <TouchableOpacity onPress={onPress} className="flex-1 rounded-md">
       <View className="rounded-lg overflow-hidden relative h-40">
         <Image
-          source={{
-            uri: imageUrl,
-          }}
+          source={{ uri: image }}
           className="w-full h-40"
           resizeMode="cover"
+          onError={onImageError}
         />
+
         <LinearGradient
           colors={["transparent", "rgba(0,0,0,0.3)", "rgba(0,0,0,0.7)"]}
           style={{ borderBottomLeftRadius: 6, borderBottomRightRadius: 6 }}
-          className="absolute bottom-0 left-0 right-0 h-16 "
+          className="absolute bottom-0 left-0 right-0 h-16"
         />
 
         <View className="absolute bottom-0 left-0 right-0 p-2">

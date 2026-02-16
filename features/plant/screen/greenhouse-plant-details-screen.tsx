@@ -1,4 +1,4 @@
-import { Header } from "@/components/header";
+import { HeaderToo } from "@/components/header-too";
 import { Image } from "@/components/image";
 import { MainLayout } from "@/components/layout/main-layout";
 import { ScreenContainer } from "@/components/layout/screen-container";
@@ -114,7 +114,7 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
 
   return (
     <MainLayout>
-      <Header
+      <HeaderToo
         title="Plant Details"
         description="View your plant information"
         showBackButton

@@ -9,6 +9,7 @@ interface Props {
   loading: boolean;
   handleLoadMore: () => void;
   loadingMore: boolean;
+  onImageError?: (id: number) => void;
 }
 
 export const PlantLibraryList = ({
@@ -16,6 +17,7 @@ export const PlantLibraryList = ({
   loading,
   handleLoadMore,
   loadingMore,
+  onImageError,
 }: Props) => {
   if (loading) return <Loader />;
 
@@ -44,6 +46,7 @@ export const PlantLibraryList = ({
           image={item.default_image?.thumbnail}
           name={item.scientific_name}
           onPress={() => router.push(`/plant/library/${item.id}`)}
+          onImageError={() => onImageError?.(item.id)}
         />
       )}
       onEndReached={handleLoadMore}

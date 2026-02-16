@@ -10,7 +10,12 @@ export const getPlants = async (search: string = "", page: number = 1) => {
     const url = `${PERENUAL_BASE_URL}/v2/species-list?key=${PERENUAL_API_KEY}&q=${search}&page=${page}`;
     const response = await fetch(url);
 
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    if (!response.ok) {
+      if (response.status === 429) {
+        throw new Error("Too many requests. Please try again in a moment.");
+      }
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
     const data = await response.json();
 

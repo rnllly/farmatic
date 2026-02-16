@@ -31,7 +31,6 @@ export const PlantAnalysisScreen = ({
           plantId: "",
           analyzerId: "",
           adminId: "",
-          plantName: "",
           imageUri,
           imageType: type,
           base64: base64Data,

@@ -1,4 +1,4 @@
-import { Header } from "@/components/header";
+import { HeaderToo } from "@/components/header-too";
 import { MainLayout } from "@/components/layout/main-layout";
 import { useAuth } from "@/hooks/use-auth";
 import { useRealTimeFetch } from "@/hooks/use-real-time-fetch";
@@ -33,7 +33,7 @@ export const AnalysisScreen = () => {
 
   return (
     <MainLayout>
-      <Header
+      <HeaderToo
         title="Analysis"
         description="Your plant library and identification history"
       />

@@ -1,5 +1,5 @@
 import { BaseCard } from "@/components/base-card";
-import { Header } from "@/components/header";
+import { HeaderToo } from "@/components/header-too";
 import { Icon } from "@/components/icon";
 import { MainLayout } from "@/components/layout/main-layout";
 import { ScreenContainer } from "@/components/layout/screen-container";
@@ -22,7 +22,7 @@ export const SettingsScreen = () => {
       where("adminId", "==", user?.id || ""),
       where("isAdmin", "==", false),
       orderBy("createdAt", "desc"),
-    ]
+    ],
   );
 
   const handleLogout = async () => {
@@ -38,7 +38,7 @@ export const SettingsScreen = () => {
 
   return (
     <MainLayout>
-      <Header
+      <HeaderToo
         title="Settings"
         description="Manage your account and preferences"
       />

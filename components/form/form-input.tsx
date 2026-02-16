@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { icons } from "lucide-react-native";
 import { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, TextInputProps, View } from "react-native";
 import { Icon } from "../icon";
 
 export function FormInput({
@@ -14,6 +14,7 @@ export function FormInput({
   iconName,
   error,
   disabled = false,
+  onSubmitEditing,
 }: {
   placeholder: string;
   value: string;
@@ -24,6 +25,7 @@ export function FormInput({
   iconName?: keyof typeof icons;
   error?: string;
   disabled?: boolean;
+  onSubmitEditing?: TextInputProps["onSubmitEditing"];
 }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -45,6 +47,7 @@ export function FormInput({
             value={value}
             onChangeText={onChangeText}
             editable={!disabled}
+            onSubmitEditing={onSubmitEditing}
           />
         </View>
         {isPassword && (

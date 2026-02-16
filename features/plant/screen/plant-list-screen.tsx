@@ -1,5 +1,4 @@
-import { FormInput } from "@/components/form/form-input";
-import { Header } from "@/components/header";
+import { HeaderToo } from "@/components/header-too";
 import { MainLayout } from "@/components/layout/main-layout";
 import { useRealTimeFetch } from "@/hooks/use-real-time-fetch";
 import { useState } from "react";
@@ -11,19 +10,11 @@ export const PlantListScreen = () => {
 
   return (
     <MainLayout>
-      <Header
+      <HeaderToo
         title="Plant Database"
         description="Choose a plant to plant in the greenhouse"
-      >
-        <FormInput
-          iconName="Search"
-          placeholder="Search for a plant"
-          value={search}
-          onChangeText={(text) => {
-            setSearch(text);
-          }}
-        />
-      </Header>
+        showBackButton
+      ></HeaderToo>
       <SelectPlantList data={data} loading={loading} />
     </MainLayout>
   );

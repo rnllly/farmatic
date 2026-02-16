@@ -1,33 +1,48 @@
 import { FormInput } from "@/components/form/form-input";
-import { Header } from "@/components/header";
+import { HeaderToo } from "@/components/header-too";
 import { MainLayout } from "@/components/layout/main-layout";
-import { useDebounce } from "@/hooks/use-debounce";
 import { useFetch } from "@/hooks/use-fetch";
 import { getPlants } from "@/services/perenual";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { LibUserGuide } from "../sections/lib-user-guide";
 import { PlantLibraryList } from "../sections/plant-library-list";
 
 export const LibraryScreen = () => {
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search);
+  const [submittedSearch, setSubmittedSearch] = useState("");
+  const cache = useRef<Record<string, any[]>>({});
 
   const [page, setPage] = useState(1);
   const [plants, setPlants] = useState<any[]>([]);
   const [loadingMore, setLoadingMore] = useState(false);
-
-  const { data, loading } = useFetch(
-    () => getPlants(debouncedSearch, page),
-    [debouncedSearch, page]
-  );
+  const [error, setError] = useState<string | null>(null);
+  const [failedImages, setFailedImages] = useState<Set<number>>(new Set());
+  const {
+    data,
+    loading,
+    error: fetchError,
+  } = useFetch(() => getPlants(submittedSearch, page), [submittedSearch, page]);
+  const handleImageError = (plantId: number) => {
+    setFailedImages((prev) => new Set(prev).add(plantId));
+  };
+  const [isGuideOpen, setGuideOpen] = useState(false);
 
   useEffect(() => {
+    if (fetchError) {
+      setError("Failed to load plants. Please try again.");
+      setLoadingMore(false);
+      return;
+    }
     if (data) {
       const plantsWithImages = data.filter(
-        (plant: any) => plant.default_image?.thumbnail
+        (plant: any) =>
+          plant.default_image?.thumbnail &&
+          plant.default_image.thumbnail.startsWith("http"),
       );
 
       if (page === 1) {
         setPlants(plantsWithImages);
+        cache.current[submittedSearch] = plantsWithImages;
       } else if (page > 1) {
         setPlants((prev) => [...prev, ...plantsWithImages]);
       }
@@ -41,28 +56,51 @@ export const LibraryScreen = () => {
       setLoadingMore(true);
       setTimeout(() => {
         setPage((prev) => prev + 1);
-      }, 500);
+      }, 1500);
     }
+  };
+
+  const openGuide = () => {
+    setGuideOpen(true);
   };
 
   return (
     <MainLayout>
-      <Header title="Plant Library" description="Browse our plant library">
+      <HeaderToo
+        title="Plant Library"
+        description="Browse our plant library"
+        rightIcon="CircleQuestionMark"
+        onRightIconPress={openGuide}
+      >
         <FormInput
           iconName="Search"
           placeholder="Search for a plant"
           value={search}
-          onChangeText={(text) => {
-            setSearch(text);
+          onChangeText={setSearch}
+          onSubmitEditing={() => {
+            if (loading) return;
+            setError(null);
             setPage(1);
+            if (cache.current[search]) {
+              setPlants(cache.current[search]);
+              setSubmittedSearch(search);
+              return;
+            }
+
+            setSubmittedSearch(search);
           }}
         />
-      </Header>
+      </HeaderToo>
+      {error && (
+        <div className="p-4 bg-red-50 text-red-600 rounded-lg m-4">{error}</div>
+      )}
+      <LibUserGuide visible={isGuideOpen} onClose={() => setGuideOpen(false)} />
       <PlantLibraryList
-        data={plants}
+        data={plants.filter((plant) => !failedImages.has(plant.id))}
         loading={loading}
         handleLoadMore={handleLoadMore}
         loadingMore={loadingMore}
+        onImageError={handleImageError}
       />
     </MainLayout>
   );
