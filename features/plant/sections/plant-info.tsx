@@ -28,7 +28,7 @@ export const PlantInfoSection = ({ plant, styles }: Props) => {
           label="Prefered Moisture"
           value={`${plant.soilMoistureRange?.min}% - ${plant.soilMoistureRange?.max}%`}
         />
-        {/* <View className="py-3">
+        <View className="py-3">
           <Divider />
         </View>
         <PlantInfoRow
@@ -41,7 +41,7 @@ export const PlantInfoSection = ({ plant, styles }: Props) => {
         <PlantInfoRow
           label="Prefered Humidity"
           value={`${plant.temperatureRange?.min}% - ${plant.temperatureRange?.max}%`}
-        /> */}
+        />
       </View>
     </View>
   );

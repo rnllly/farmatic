@@ -13,7 +13,7 @@ export const Controller = ({ styles }: Props) => {
   return (
     <View className={clsx(styles, "mb-6")}>
       <Text className="text-xl font-bold text-gray-800 mb-4">Controller</Text>
-      <ControllerCard
+      {/* <ControllerCard
         title="Fan"
         icon="Fan"
         value={controls?.fan ? "On" : "Off"}
@@ -27,8 +27,13 @@ export const Controller = ({ styles }: Props) => {
           statusBgClass: "bg-green-50",
           statusTextClass: "text-green-700",
         }}
+<<<<<<< HEAD
       />
       <ControllerCard
+=======
+      /> */}
+      {/* <ControllerCard
+>>>>>>> 94c26b97ad3d3835e58c203618581f655e51f551
         title="Light"
         icon="Lightbulb"
         value={controls?.light ? "On" : "Off"}

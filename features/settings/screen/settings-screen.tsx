@@ -15,7 +15,6 @@ import { Alert, Text, TouchableOpacity } from "react-native";
 
 export const SettingsScreen = () => {
   const { user } = useAuth();
-
   const { data: staffMembers, loading: staffLoading } = useRealTimeFetch(
     "users",
     [
