@@ -37,27 +37,11 @@ export function Button({
       style={{ height: buttonHeight }}
       className={clsx(baseClasses, variantClasses, disabledClasses, styles)}
     >
-      {/* {isLoading ? (
-        <ActivityIndicator
-          size="small"
-          color={variant === "outline" ? "#16A34A" : "white"}
-        />
-      ) : (
-        <Text
-          className={clsx(
-            textSize,
-            "font-bold",
-            variant === "outline" ? "text-primary" : "text-white"
-          )}
-        >
-          {label}
-        </Text>
-      )} */}
       <Text
         className={clsx(
           textSize,
           "font-bold",
-          variant === "outline" ? "text-primary" : "text-white"
+          variant === "outline" ? "text-primary" : "text-white",
         )}
       >
         {label}

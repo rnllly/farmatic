@@ -57,14 +57,7 @@ export function ControllerCard({
           <Text className="ml-3 font-semibold text-gray-800">{title}</Text>
         </View>
 
-        <View className="flex-row items-center">
-          {/* <Switch
-            value={value}
-            onValueChange={onToggle}
-            trackColor={{ false: "#e5e7eb", true: onTrackColor }}
-            thumbColor={value ? colorScheme.switchOnColor : "#d1d5db"}
-          /> */}
-        </View>
+        <View className="flex-row items-center"></View>
       </View>
       <View
         className={clsx(colorScheme.statusBgClass, "mt-4 rounded-xl px-4 py-3")}

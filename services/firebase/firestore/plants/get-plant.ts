@@ -1,11 +1,10 @@
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "../../config";
 
-export const getPlant = async (plantId: string) => {
+export const getPlant = async (plantId: string, adminId: string) => {
   try {
-    const plantRef = doc(db, "plantList", plantId);
+    const plantRef = doc(db, "users/", adminId, "/selectedPlant", plantId);
     const plantDoc = await getDoc(plantRef);
-
     if (!plantDoc.exists()) return null;
 
     return {
@@ -18,11 +17,23 @@ export const getPlant = async (plantId: string) => {
   }
 };
 
-export const choosePlant = async (
-  adminId: string,
-  userId: string,
-  plantId: string,
-) => {
+export const selectPlant = async (plantId: string) => {
+  try {
+    const plantRef = doc(db, "plantList", plantId);
+    const plantDoc = await getDoc(plantRef);
+    if (!plantDoc.exists()) return null;
+
+    return {
+      id: plantDoc.id,
+      ...plantDoc.data(),
+    };
+  } catch (error: any) {
+    console.error("Error selecting plant by ID:", error);
+    return null;
+  }
+};
+
+export const choosePlant = async (userId: string, plantId: string) => {
   try {
     const plantRef = doc(db, "plantList", plantId);
     const plantSnap = await getDoc(plantRef);
@@ -31,23 +42,10 @@ export const choosePlant = async (
 
     const plantData = plantSnap.data();
 
-    const userPlantRef = doc(
-      db,
-      "admins",
-      adminId,
-      "users",
-      userId,
-      "selectedPlant",
-      plantId,
-    );
+    const userPlantRef = doc(db, "users", userId, "selectedPlant", plantId);
 
     await setDoc(userPlantRef, {
-      name: plantData.name,
-      plantDescription: plantData.description,
-      soilMoistureRange: plantData.soilMoistureRange,
-      temperatureRange: plantData.temperatureRange,
-      humidityRange: plantData.humidityRange,
-      imageUrl: plantData.imageUrl,
+      ...plantData,
       plantedAt: serverTimestamp(),
     });
 

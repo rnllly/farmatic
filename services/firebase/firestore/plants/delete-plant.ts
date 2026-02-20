@@ -1,9 +1,9 @@
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../config";
 
-export const deletePlant = async (plantId: string) => {
+export const deletePlant = async (plantId: string, adminId: string) => {
   try {
-    const plantRef = doc(db, "plantList", plantId);
+    const plantRef = doc(db, "users/", adminId, "/selectedPlant", plantId);
 
     await deleteDoc(plantRef);
 

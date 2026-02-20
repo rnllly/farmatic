@@ -29,13 +29,8 @@ export const IdentifierScreen = () => {
         imageUri: image.uri,
         imageType: type,
       });
-<<<<<<< HEAD
       setIsLoading(false);
       router.push("/(root)/(main)/analysis");
-=======
-      Alert.alert("Success", "Plant identified successfully!");
-      router.push("/(root)/plant/analyze-plant-history");
->>>>>>> 94c26b97ad3d3835e58c203618581f655e51f551
     } catch (err) {
       console.error(err);
       const message = (err as any)?.message || (err as any)?.code;
@@ -49,11 +44,6 @@ export const IdentifierScreen = () => {
         return;
       }
       Alert.alert("Error", "Could not analyze the image.");
-<<<<<<< HEAD
-=======
-    } finally {
-      setIsLoading(false);
->>>>>>> 94c26b97ad3d3835e58c203618581f655e51f551
     }
   };
 

@@ -5,32 +5,43 @@ import { ScreenContainer } from "@/components/layout/screen-container";
 import { Loader } from "@/components/loader";
 import { useAuth } from "@/hooks/use-auth";
 import { useFetch } from "@/hooks/use-fetch";
-import { useRealTimeFetch } from "@/hooks/use-real-time-fetch";
-import { analyzePlant } from "@/services/firebase/ai";
-import { getPlant, plantDelete } from "@/services/firebase/firestore/plants";
-import { getImageType, pickImage, takePhoto } from "@/utils/image";
+import { useRealTimeDocument } from "@/hooks/use-realtime-document";
+import { deletePlant, getPlant } from "@/services/firebase/firestore/plants";
 import { useRouter } from "expo-router";
-import { limit, orderBy, where } from "firebase/firestore";
-import { useState } from "react";
-import { Alert, ToastAndroid } from "react-native";
+import { Alert } from "react-native";
 import { Controller } from "../sections/controller";
 import { EnvironmentalStatus } from "../sections/environmental-status";
 import { PlantInfoSection } from "../sections/plant-info";
 
 export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
   const router = useRouter();
-  const { adminId, user } = useAuth();
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const { data: plant, loading } = useFetch(() => getPlant(id as string), []);
-  const { data: analysisData } = useRealTimeFetch("analyses", [
-    where("adminId", "==", adminId || ""),
-    where("plantId", "==", id || ""),
-    orderBy("createdAt", "desc"),
-    limit(1),
-  ]);
-
-  if (loading) return <Loader />;
-
+  const { adminId } = useAuth();
+  const { data: plant, loading } = useFetch(
+    () =>
+      adminId
+        ? getPlant(id as string, adminId as string)
+        : Promise.resolve(null),
+    [adminId],
+  );
+  const { data: sensor } = useRealTimeDocument(
+    adminId ? `users/${adminId}/sensors/latest` : null,
+  );
+  const { data: fan } = useRealTimeDocument(
+    adminId ? `users/${adminId}/controllers/fanDevice` : null,
+  );
+  const { data: light } = useRealTimeDocument(
+    adminId ? `users/${adminId}/controllers/lightDevice` : null,
+  );
+  const { data: sprinkler1 } = useRealTimeDocument(
+    adminId ? `users/${adminId}/controllers/sprinkler1` : null,
+  );
+  const { data: sprinkler2 } = useRealTimeDocument(
+    adminId ? `users/${adminId}/controllers/sprinkler2` : null,
+  );
+  const { data: sprinkler3 } = useRealTimeDocument(
+    adminId ? `users/${adminId}/controllers/sprinkler3` : null,
+  );
+  if (loading || !adminId || !plant) return <Loader />;
   const confirmDelete = () => {
     if (!plant?.id) return;
 
@@ -45,7 +56,10 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
           onPress: async () => {
             try {
               router.back();
-              const result = await plantDelete(plant.id as string);
+              const result = await deletePlant(
+                plant.id as string,
+                adminId as string,
+              );
               if (!result.isSuccess)
                 return Alert.alert("Error", result.message);
             } catch (e: any) {
@@ -56,62 +70,6 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
       ],
     );
   };
-
-  const handleSelectImage = async (mode: "camera" | "gallery") => {
-    try {
-      setIsAnalyzing(true);
-      const image = mode === "camera" ? await takePhoto() : await pickImage();
-      if (!image) return;
-
-      const type = getImageType(image.uri);
-
-      await analyzePlant({
-        plantId: plant.id as string,
-        analyzerId: user?.id as string,
-        adminId: adminId as string,
-        imageUri: image.uri,
-        imageType: type,
-      });
-    } catch (err) {
-      console.error(err);
-      Alert.alert("Error", "Could not analyze the image.");
-    } finally {
-      setIsAnalyzing(false);
-      router.push({
-        pathname: "/plant/analyze-plant-history",
-        params: {
-          plantId: plant.id,
-          adminId,
-        },
-      });
-      ToastAndroid.show("Plant analyzed successfully", ToastAndroid.SHORT);
-    }
-  };
-
-  const handlePress = async () => {
-    if (isAnalyzing) return;
-    return Alert.alert(
-      "Upload Plant Photo",
-      "Select a source to analyze your plant",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Gallery",
-          style: "default",
-          onPress: async () => await handleSelectImage("gallery"),
-        },
-        {
-          text: "Camera",
-          style: "default",
-          onPress: async () => await handleSelectImage("camera"),
-        },
-      ],
-    );
-  };
-
   return (
     <MainLayout>
       <HeaderToo
@@ -123,7 +81,7 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
       />
       <ScreenContainer scrollable>
         <Image
-          uri={analysisData?.[0]?.analysis?.imageUrl || plant?.imageUrl}
+          uri={plant?.[0]?.plant?.imageUrl || plant?.imageUrl}
           styles="mb-6 rounded-xl"
           height={250}
         />
@@ -133,28 +91,12 @@ export const GreenhousePlantDetailsScreen = ({ id }: { id: string }) => {
             ...plant,
           }}
         />
-        <EnvironmentalStatus />
-        <Controller />
-        {/* <Button
-          label="Analyze Plant"
-          onPress={handlePress}
-          styles="mb-2"
-          isLoading={isAnalyzing}
-        />
-        <Button
-          label="Analyze History"
-          variant="outline"
-          onPress={() =>
-            router.push({
-              pathname: "/plant/analyze-plant-history",
-              params: {
-                plantId: plant.id,
-                adminId,
-              },
-            })
-          }
-          isLoading={isAnalyzing}
-        /> */}
+        {sensor || fan || light || sprinkler1 || sprinkler2 || sprinkler3 ? (
+          <>
+            <EnvironmentalStatus />
+            <Controller />
+          </>
+        ) : null}
       </ScreenContainer>
     </MainLayout>
   );

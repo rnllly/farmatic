@@ -1,11 +1,9 @@
 import { HeaderToo } from "@/components/header-too";
 import { MainLayout } from "@/components/layout/main-layout";
 import { useRealTimeFetch } from "@/hooks/use-real-time-fetch";
-import { useState } from "react";
 import { SelectPlantList } from "../sections/select-plant-list";
 
 export const PlantListScreen = () => {
-  const [search, setSearch] = useState("");
   const { data, loading } = useRealTimeFetch("plantList", []);
 
   return (

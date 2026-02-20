@@ -2,21 +2,20 @@ import { HeaderIcon } from "@/components/header-icon";
 import { HeaderToo } from "@/components/header-too";
 import { MainLayout } from "@/components/layout/main-layout";
 import { ScreenContainer } from "@/components/layout/screen-container";
+import { useAuth } from "@/hooks/use-auth";
 import { useRealTimeFetch } from "@/hooks/use-real-time-fetch";
-import { router, useLocalSearchParams } from "expo-router";
-import { where } from "firebase/firestore";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { Text, View } from "react-native";
+import { EnvironmentalStatus } from "../sections/environmental-status";
 import { PlantList } from "../sections/plant-list";
 import { UserGuide } from "../sections/user-guide";
 
 export const GreenhouseScreen = () => {
-  const { adminId } = useLocalSearchParams();
-  const { data, loading } = useRealTimeFetch("plantList", [
-    where("isChosen", "==", true),
-  ]);
+  const { adminId } = useAuth();
+  const { data, loading } = useRealTimeFetch(`users/${adminId}/selectedPlant`);
   const [isGuideOpen, setGuideOpen] = useState(false);
-  const confirmDelete = () => {
+  const openGuide = () => {
     setGuideOpen(true);
   };
 
@@ -26,10 +25,14 @@ export const GreenhouseScreen = () => {
         title="Farmatic"
         description="Greenhouse Dashboard"
         rightIcon="CircleQuestionMark"
-        onRightIconPress={confirmDelete}
+        onRightIconPress={openGuide}
       />
+      <UserGuide visible={isGuideOpen} onClose={() => setGuideOpen(false)} />
       <ScreenContainer>
-        <View className="mb-6 flex-row items-center justify-between">
+        <EnvironmentalStatus />
+      </ScreenContainer>
+      <ScreenContainer>
+        <View className="flex-row items-center justify-between">
           <Text className="text-2xl font-bold">Greenhouse Plants</Text>
           {data?.length === 0 ? (
             <HeaderIcon
@@ -37,10 +40,6 @@ export const GreenhouseScreen = () => {
               onPress={() => router.push("/plant/add-plant")}
             />
           ) : null}
-          <UserGuide
-            visible={isGuideOpen}
-            onClose={() => setGuideOpen(false)}
-          />
         </View>
         <PlantList data={data} loading={loading} />
       </ScreenContainer>

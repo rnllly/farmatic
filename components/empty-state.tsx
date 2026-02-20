@@ -1,13 +1,16 @@
+import { icons } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { Icon } from "./icon";
+import { HeaderIcon } from "./header-icon";
 
 export const EmptyState = ({
+  icon,
   title,
   description,
   buttonText,
   onPress,
 }: {
+  icon?: keyof typeof icons;
   title: string;
   description: string;
   buttonText?: string;
@@ -15,7 +18,7 @@ export const EmptyState = ({
 }) => {
   return (
     <View className="flex-1 items-center justify-center px-6">
-      <Icon name="Sprout" size={64} color="#5B8908" />
+      {icon && <HeaderIcon icon={icon as keyof typeof icons} />}
       <Text className="text-xl font-semibold text-primary  mt-4 text-center">
         {title}
       </Text>

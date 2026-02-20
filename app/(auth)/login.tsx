@@ -14,23 +14,19 @@ export const Login = () => {
   } = useForm({
     defaultValues: { email: "", password: "" },
   });
-
   const onSubmit = async (data: { email: string; password: string }) => {
     try {
       const { isSuccess, message } = await login(data.email, data.password);
-
       if (!isSuccess) {
         Alert.alert("Error", message);
         return;
       }
-
       router.replace("/home");
       ToastAndroid.show(message!, ToastAndroid.SHORT);
     } catch (error: any) {
       Alert.alert("Error", error.message);
     }
   };
-
   return (
     <AuthLayout title="Login" description="Sign in to continue ">
       <Controller

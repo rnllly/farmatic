@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 export function useRealTimeFetch<T = any>(
   path: string,
-  constraints: QueryConstraint[] = []
+  constraints: QueryConstraint[] = [],
 ) {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ export function useRealTimeFetch<T = any>(
     const q = query(collection(db, path), ...constraints);
     const unsub = onSnapshot(q, (snapshot) => {
       const docs = snapshot.docs.map(
-        (doc) => ({ id: doc.id, ...doc.data() }) as T
+        (doc) => ({ id: doc.id, ...doc.data() }) as T,
       );
       setData(docs);
       setLoading(false);

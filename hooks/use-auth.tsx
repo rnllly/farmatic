@@ -31,7 +31,7 @@ export const useAuth = () => {
           (err) => {
             setError(err.message);
             setIsLoading(false);
-          }
+          },
         );
       } else {
         setIsAuthenticated(false);
@@ -45,6 +45,7 @@ export const useAuth = () => {
       if (unsubUser) unsubUser();
     };
   }, []);
+  const ready = !isLoading && !!adminId;
 
-  return { isAuthenticated, user, isLoading, error, adminId };
+  return { isAuthenticated, user, isLoading, error, adminId, ready };
 };

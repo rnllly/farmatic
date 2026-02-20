@@ -42,17 +42,6 @@ export const SettingsScreen = () => {
         description="Manage your account and preferences"
       />
       <ScreenContainer scrollable>
-        {/* <View className="my-6 flex-row items-center justify-between">
-          <View className="flex-row items-center gap-4">
-            <Icon name="Settings" size={28} color="#5B8908" />
-            <Text className="text-3xl font-bold">Settings</Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => router.push("/user/edit-user-profile")}
-          >
-            <Icon name="SquarePen" size={28} color="#5B8908" />
-          </TouchableOpacity>
-        </View> */}
         <ProfileSection />
         <PersonalInfoSection />
         <AccountInfoSection />
@@ -63,7 +52,6 @@ export const SettingsScreen = () => {
             loading={staffLoading}
           />
         )}
-        {/* <ActionsSection /> */}
 
         <BaseCard styles="mt-6" padding="p-4">
           <TouchableOpacity

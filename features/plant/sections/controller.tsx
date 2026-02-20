@@ -1,5 +1,9 @@
+import { EmptyState } from "@/components/empty-state";
+import { Loader } from "@/components/loader";
 import { ControllerCard } from "@/features/plant/components/controller-card";
-import { useRealtimeDatabase } from "@/hooks/use-real-time-databases";
+import { useAuth } from "@/hooks/use-auth";
+import { useRealTimeDocument } from "@/hooks/use-realtime-document";
+import { formatDate } from "@/utils/date";
 import clsx from "clsx";
 import { Text, View } from "react-native";
 
@@ -8,18 +12,41 @@ interface Props {
 }
 
 export const Controller = ({ styles }: Props) => {
-  const { data: controls } = useRealtimeDatabase(`controller`);
+  const { adminId } = useAuth();
+  const { data: fan, loading } = useRealTimeDocument(
+    adminId ? `users/${adminId}/controllers/fanDevice` : null,
+  );
+  const { data: light } = useRealTimeDocument(
+    adminId ? `users/${adminId}/controllers/lightDevice` : null,
+  );
+  const { data: sprinkler1 } = useRealTimeDocument(
+    adminId ? `users/${adminId}/controllers/sprinkler1` : null,
+  );
+  const { data: sprinkler2 } = useRealTimeDocument(
+    adminId ? `users/${adminId}/controllers/sprinkler2` : null,
+  );
+  const { data: sprinkler3 } = useRealTimeDocument(
+    adminId ? `users/${adminId}/controllers/sprinkler3` : null,
+  );
+
+  if (!fan || !light || !sprinkler1 || !sprinkler2 || !sprinkler3)
+    return (
+      <EmptyState
+        icon="Folder"
+        title="No Greenhouse Yet"
+        description="Your environmental status will appear here."
+      />
+    );
+
+  if (loading || !adminId) return <Loader />;
 
   return (
     <View className={clsx(styles, "mb-6")}>
-      <Text className="text-xl font-bold text-gray-800 mb-4">Controller</Text>
-      {/* <ControllerCard
+      <Text className="text-2xl font-bold text-gray-800 mb-4">Controller</Text>
+      <ControllerCard
         title="Fan"
         icon="Fan"
-        value={controls?.fan ? "On" : "Off"}
-        // onToggle={() => {
-        //   toggleController("fan", controls?.fan);
-        // }}
+        value={fan?.fan ? "On" : "Off"}
         colorScheme={{
           iconBgClass: "bg-green-100",
           iconColor: "#059669",
@@ -27,19 +54,11 @@ export const Controller = ({ styles }: Props) => {
           statusBgClass: "bg-green-50",
           statusTextClass: "text-green-700",
         }}
-<<<<<<< HEAD
       />
       <ControllerCard
-=======
-      /> */}
-      {/* <ControllerCard
->>>>>>> 94c26b97ad3d3835e58c203618581f655e51f551
         title="Light"
         icon="Lightbulb"
-        value={controls?.light ? "On" : "Off"}
-        // onToggle={() => {
-        //   toggleController("light", controls?.light);
-        // }}
+        value={light?.light ? "On" : "Off"}
         colorScheme={{
           iconBgClass: "bg-yellow-100",
           iconColor: "#f59e0b",
@@ -51,10 +70,7 @@ export const Controller = ({ styles }: Props) => {
       <ControllerCard
         title="Sprinkler 1"
         icon="Droplet"
-        value={controls?.sprinkler1.openedAt}
-        // onToggle={() => {
-        //   toggleController("sprinkler", controls?.sprinkler);
-        // }}
+        value={formatDate(sprinkler1?.openedAt)}
         colorScheme={{
           iconBgClass: "bg-blue-100",
           iconColor: "#60a5fa",
@@ -66,10 +82,7 @@ export const Controller = ({ styles }: Props) => {
       <ControllerCard
         title="Sprinkler 2"
         icon="Droplet"
-        value={controls?.sprinkler2.openedAt}
-        // onToggle={() => {
-        //   toggleController("sprinkler", controls?.sprinkler);
-        // }}
+        value={formatDate(sprinkler2?.openedAt)}
         colorScheme={{
           iconBgClass: "bg-blue-100",
           iconColor: "#60a5fa",
@@ -81,10 +94,7 @@ export const Controller = ({ styles }: Props) => {
       <ControllerCard
         title="Sprinkler 3"
         icon="Droplet"
-        value={controls?.sprinkler3.openedAt}
-        // onToggle={() => {
-        //   toggleController("sprinkler", controls?.sprinkler);
-        // }}
+        value={formatDate(sprinkler3?.openedAt)}
         colorScheme={{
           iconBgClass: "bg-blue-100",
           iconColor: "#60a5fa",

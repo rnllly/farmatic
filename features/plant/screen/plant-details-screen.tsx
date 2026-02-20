@@ -7,33 +7,26 @@ import { Loader } from "@/components/loader";
 import { useAuth } from "@/hooks/use-auth";
 import { useFetch } from "@/hooks/use-fetch";
 import { useRealTimeFetch } from "@/hooks/use-real-time-fetch";
-import { choosePlant, getPlant } from "@/services/firebase/firestore/plants";
+import { choosePlant, selectPlant } from "@/services/firebase/firestore/plants";
 import { useRouter } from "expo-router";
-import { where } from "firebase/firestore";
 import { Alert } from "react-native";
 import { PlantInfoSection } from "../sections/plant-info";
 
 export const PlantDetailsScreen = ({ id }: { id: string }) => {
   const router = useRouter();
-  const { adminId } = useAuth();
-  const { user } = useAuth();
-  const { data: plant, loading } = useFetch(() => getPlant(id as string), []);
-  const { data: Data } = useRealTimeFetch("plantList", [
-    where("adminId", "==", adminId || ""),
-    where("plantId", "==", id || ""),
-  ]);
-
+  const { adminId, user } = useAuth();
+  const { data: plant, loading } = useFetch(
+    () => selectPlant(id as string),
+    [],
+  );
+  const { data: Data } = useRealTimeFetch("plantList", []);
   if (loading || !plant) return <Loader />;
-  const handlePress = async () => {
-    if (!plant?.id) return;
-    try {
-      const result = await choosePlant(
-        adminId as string,
-        user as string,
-        plant.id as string,
-      );
-      if (!result.isSuccess) return Alert.alert("Error", result.message);
 
+  const handlePress = async () => {
+    if (!plant?.id || !user || !adminId) return;
+    try {
+      const result = await choosePlant(user.id as string, plant.id as string);
+      if (!result.isSuccess) return Alert.alert("Error", result.message);
       router.push("/(root)/(main)/home");
     } catch (e: any) {
       Alert.alert("Error", e?.message || "Failed to choose plant");
